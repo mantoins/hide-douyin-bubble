@@ -1,0 +1,9 @@
+Package: com.custom.hidedouyinvisitorbubble
+Name: HideDouyinVisitorBubble
+Version: 1.0
+Architecture: iphoneos-arm64
+Description: 隐藏抖音来客客服悬浮气泡
+Maintainer: Custom
+Author: Custom
+Section: Tweaks
+Depends: mobilesubstrate
