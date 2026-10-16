@@ -1,23 +1,28 @@
 name: Build Tweak
-on: [push]
+on: push
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install Theos dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y git make clang ldid dpkg-dev libplist-dev libzip-dev
+
       - name: Setup Theos
         run: |
-          git clone https://github.com/theos/theos.git ~/theos
-          echo "export THEOS=~/theos" >> ~/.bashrc
-          source ~/.bashrc
-          sudo apt update
-          sudo apt install git make clang ldid -y
-      - name: Compile
+          git clone https://github.com/theos/theos.git $HOME/theos
+          echo "THEOS=$HOME/theos" >> $GITHUB_ENV
+
+      - name: Build package
         run: |
-          source ~/.bashrc
           make package
-      - name: Upload artifact
+
+      - name: Upload deb
         uses: actions/upload-artifact@v4
         with:
+          name: tweak-deb
           path: packages/*.deb
